@@ -1,0 +1,34 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#chain-wrapper {
+  position: relative;
+  height: 300px;
+  width: 500px;
+  overflow-x: scroll;
+}
+
+#chain {
+  position: absolute;
+  bottom: 0
+}
+
+#chain p {
+  border: 1px solid #00B7FF;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+#chain .chch {
+  margin-left: 50px;
+}
+
+#chain .user {
+  margin-right: 50px;
+}

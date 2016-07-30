@@ -1,0 +1,33 @@
+<h1>{{title}}</h1>
+
+<div id="chain-wrapper">
+  <div id="chain"></div>
+</div>
+<form id="chat-form">
+  <input type="text" name="" id="text-input" autocomplete="off">
+</form>
+
+<script type="text/javascript">
+  $(document).ready(function ($) {
+    var responses = [
+      'Hi',
+      'There',
+      'Mark'
+    ]
+
+    var responseIndex = 0
+
+    function addResponse () {
+      var response = responses[responseIndex] || 'I... don\'t know what to say to that'
+      $('#chain').prepend('<p class="chch">' + response + '</p>')
+      responseIndex++
+    }
+
+    $('#chat-form').on('submit', function () {
+      $('#chain').prepend('<p class="user">' + $('#text-input').val() + '</p>')
+      setTimeout(addResponse, 1000)
+
+      return false
+    })
+  })
+</script>
