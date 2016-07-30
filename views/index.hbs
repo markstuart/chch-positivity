@@ -1,33 +1,85 @@
 <h1>{{title}}</h1>
 
-<div id="chain-wrapper">
-  <div id="chain"></div>
-</div>
-<form id="chat-form">
-  <input type="text" name="" id="text-input" autocomplete="off">
-</form>
+<div id="graph"></div>
+<input type="hidden" name="" id="data" value="{{data}}">
 
 <script type="text/javascript">
   $(document).ready(function ($) {
-    var responses = [
-      'Hi',
-      'There',
-      'Mark'
-    ]
+    console.log(JSON.parse($('#data').val()))
 
-    var responseIndex = 0
+    var data = JSON.parse($('#data').val())
 
-    function addResponse () {
-      var response = responses[responseIndex] || 'I... don\'t know what to say to that'
-      $('#chain').prepend('<p class="chch">' + response + '</p>')
-      responseIndex++
-    }
+    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
-    $('#chat-form').on('submit', function () {
-      $('#chain').prepend('<p class="user">' + $('#text-input').val() + '</p>')
-      setTimeout(addResponse, 1000)
+    var parseTime = d3.timeParse("%Y-%m-%d");
 
-      return false
+    var x = d3.scaleTime()
+        .range([0, width]);
+
+    var y = d3.scaleLinear()
+        .range([height, 0]);
+
+    var posLine = d3.line()
+        .x(function(d) { 
+          return x(new Date(d.date)); 
+        })
+        .y(function(d) { 
+          return y(d.positive); 
+        });
+
+    var negLine = d3.line()
+        .x(function(d) { 
+          return x(new Date(d.date)); 
+        })
+        .y(function(d) { 
+          return y(d.negative); 
+        });
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    x.domain(d3.extent(data, function(d) { return new Date(d.date); }));
+    var yDomain = []
+    data.forEach(function (d) {
+      yDomain = yDomain.concat([d.positive, d.negative])
     })
+    y.domain(d3.extent(yDomain))
+
+    svg.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+    svg.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y))
+      .append("text")
+      .attr("class", "axis-title")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Price ($)");
+
+    svg.append("path")
+      .datum(data)
+      .attr("class", "posline")
+      .attr("d", posLine);
+
+    svg.append("path")
+      .datum(data)
+      .attr("class", "negline")
+      .attr("d", negLine);
+
+    function type(d) {
+      d.date = parseTime(d.date);
+      d.positive = +d.positive;
+      return d;
+    }
   })
 </script>

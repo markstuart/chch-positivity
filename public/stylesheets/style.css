@@ -32,3 +32,31 @@ a {
 #chain .user {
   margin-right: 50px;
 }
+
+/* Graphing */
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis--x path {
+  display: none;
+}
+
+.posline {
+  fill: none;
+  stroke: green;
+  stroke-width: 1.5px;
+}
+
+.negline {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
+}
