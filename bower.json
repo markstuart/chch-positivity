@@ -1,0 +1,19 @@
+{
+  "name": "my-city-my-friend",
+  "description": "",
+  "main": "bin/www",
+  "authors": [
+    "Mark Stuart <mstuart_is@me.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}
