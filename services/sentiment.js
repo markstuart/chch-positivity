@@ -19,15 +19,20 @@ function sentiment (text, cb) {
 function getPercentages (sentiments) {
   var posCount = 0
   var negCount = 0
+  var neuCount = 0
 
   sentiments.forEach(function (s) {
     if (s.type === 'positive') return posCount += 1
     if (s.type === 'negative') return negCount += 1
+    if (s.type === 'neutral') return neuCount += 1
   })
 
   return {
-    positivePercent: (posCount / sentiments.length) * 100,
-    negativePercent: (negCount / sentiments.length) * 100
+    percentage: {
+      positive: (posCount / sentiments.length) * 100,
+      neutral: (neuCount / sentiments.length) * 100,
+      negative: (negCount / sentiments.length) * 100
+    }
   }
 }
 
